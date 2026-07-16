@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<title>Happy Birthday, Meherin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --plum: #241527;
+    --plum-deep: #150c19;
+    --wine: #6b2545;
+    --rose: #e6a4c4;
+    --blush: #f7e3e6;
+    --gold: #d9b26a;
+    --gold-soft: #eeddb0;
+  }
+
+  *{ box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html{ scroll-behavior: smooth; }
+
+  html,body{
+    margin:0; padding:0;
+    background: radial-gradient(ellipse at 50% -10%, #4a2247 0%, var(--plum) 45%, var(--plum-deep) 100%);
+    color: var(--blush);
+    font-family: 'Cormorant Garamond', serif;
+    overflow-x: hidden;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+  }
+
+  /* ---------- Loader ---------- */
+  #loader{
+    position: fixed; inset: 0; z-index: 100;
+    background: var(--plum-deep);
+    display: flex; align-items: center; justify-content: center;
+    transition: opacity 1s ease, visibility 1s ease;
+  }
+  #loader.hide{ opacity: 0; visibility: hidden; }
+  #loader p{
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic; font-weight: 400;
+    letter-spacing: 0.08em;
+    font-size: 18px;
+    color: var(--gold-soft);
+    opacity: 0;
+    animation: loaderIn 2.2s ease forwards;
+  }
+  @keyframes loaderIn{
+    0%{ opacity: 0; letter-spacing: 0.3em; }
+    40%{ opacity: 1; letter-spacing: 0.08em; }
+    80%{ opacity: 1; }
+    100%{ opacity: 0; }
+  }
+
+  /* ---------- Ambient layers ---------- */
+  #petal-field, #firefly-field{
+    position: fixed; inset: 0; pointer-events: none; z-index: 1; overflow: hidden;
+  }
+  .petal{
+    position: absolute; top: -10%; font-size: 20px; opacity: 0.75;
+    animation: fall linear infinite, sway ease-in-out infinite alternate;
+    filter: drop-shadow(0 0 6px rgba(232,160,191,0.3));
+  }
+  @keyframes fall{ from{ transform: translateY(-10vh) rotate(0deg); } to{ transform: translateY(110vh) rotate(360deg); } }
+  @keyframes sway{ from{ margin-left: -36px; } to{ margin-left: 36px; } }
+
+  .firefly{
+    position: absolute;
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    background: var(--gold-soft);
+    box-shadow: 0 0 8px 2px rgba(238,221,176,0.7);
+    animation: drift ease-in-out infinite, glow ease-in-out infinite;
+  }
+  @keyframes drift{
+    0%{ transform: translate(0,0); }
+    50%{ transform: translate(var(--dx), var(--dy)); }
+    100%{ transform: translate(0,0); }
+  }
+  @keyframes glow{
+    0%,100%{ opacity: 0.15; }
+    50%{ opacity: 0.9; }
+  }
+
+  /* ---------- Sections ---------- */
+  section{
+    position: relative; z-index: 2;
+    min-height: 100vh;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 12vh 7vw;
+    text-align: center;
+  }
+
+  .reveal{
+    opacity: 0; transform: translateY(28px);
+    transition: opacity 1s ease, transform 1s ease;
+  }
+  .reveal.in{ opacity: 1; transform: translateY(0); }
+  .reveal.d1{ transition-delay: 0.1s; }
+  .reveal.d2{ transition-delay: 0.28s; }
+  .reveal.d3{ transition-delay: 0.46s; }
+
+  /* ---------- Hero ---------- */
+  .hero{ min-height: 100svh; }
+  .eyebrow{
+    font-family: 'Poppins', sans-serif; font-weight: 300;
+    letter-spacing: 0.4em; text-transform: uppercase; font-size: 11px;
+    color: var(--gold-soft); opacity: 0.85;
+  }
+  .name-title{
+    font-family: 'Great Vibes', cursive;
+    font-size: clamp(58px, 17vw, 120px);
+    line-height: 1;
+    margin: 8px 0 6px;
+    background: linear-gradient(180deg, #fff6e8 0%, var(--gold) 55%, #b98a45 100%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    filter: drop-shadow(0 2px 20px rgba(217,178,106,0.3));
+  }
+  .subtitle{
+    font-size: clamp(16px, 4vw, 20px);
+    font-style: italic; color: var(--rose); letter-spacing: 0.02em;
+  }
+  .scroll-cue{
+    margin-top: 60px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase;
+    color: rgba(247,227,230,0.45);
+  }
+  .scroll-cue::after{
+    content: ''; display: block; width: 1px; height: 34px; margin: 10px auto 0;
+    background: linear-gradient(180deg, var(--gold), transparent);
+    animation: cueMove 1.8s ease-in-out infinite;
+  }
+  @keyframes cueMove{ 0%,100%{ opacity: 0.2; } 50%{ opacity: 1; } }
+
+  /* ---------- Divider ---------- */
+  .divider{ display:flex; align-items:center; gap:14px; width: 100%; max-width: 300px; margin: 0 auto 30px; }
+  .divider span{ flex:1; height:1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+  .divider svg{ width: 18px; height: 18px; flex-shrink: 0; }
+
+  /* ---------- Note chapter ---------- */
+  .note-text{
+    max-width: 480px;
+    font-size: clamp(19px, 4.6vw, 24px);
+    font-style: italic;
+    line-height: 1.8;
+    color: var(--blush);
+  }
+  .note-text .accent{ color: var(--gold); font-style: normal; }
+
+  /* ---------- Cake chapter ---------- */
+  .cake-stage{ position: relative; width: 220px; height: 200px; margin: 0 auto 6px; }
+  .cake{ position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 200px; }
+  .flame{ transform-origin: center bottom; animation: flicker 1.6s ease-in-out infinite; transition: opacity 0.4s ease, transform 0.4s ease; }
+  @keyframes flicker{ 0%,100%{ transform: scaleY(1) rotate(-1deg); } 50%{ transform: scaleY(1.12) rotate(2deg); } }
+  .cake-stage.blown .flame{ opacity: 0; transform: scaleY(0) translateY(6px); }
+  .smoke{ opacity: 0; }
+  .cake-stage.blown .smoke{ animation: smokeRise 1.6s ease-out forwards; }
+  @keyframes smokeRise{ 0%{ opacity: 0.6; transform: translateY(0) scale(1); } 100%{ opacity: 0; transform: translateY(-30px) scale(2.2); } }
+  .cake-hint{
+    font-family: 'Poppins', sans-serif; font-size: 12px; letter-spacing: 0.08em;
+    color: var(--gold-soft); opacity: 0.75; margin-top: 6px; cursor: pointer;
+  }
+
+  /* ---------- Letter chapter ---------- */
+  .open-btn{
+    font-family: 'Poppins', sans-serif; font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--plum); background: linear-gradient(135deg, var(--gold-soft), var(--gold));
+    border: none; padding: 14px 34px; border-radius: 999px; cursor: pointer;
+    box-shadow: 0 8px 24px rgba(217,178,106,0.35), inset 0 1px 0 rgba(255,255,255,0.4);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+  .open-btn:hover{ transform: translateY(-2px); box-shadow: 0 12px 28px rgba(217,178,106,0.45); }
+  .open-btn.hidden{ display:none; }
+
+  .letter{
+    max-width: 480px; margin: 26px auto 0;
+    background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+    border: 1px solid rgba(217,178,106,0.35);
+    border-radius: 18px;
+    padding: 36px 30px;
+    backdrop-filter: blur(6px);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+    display: none; text-align: left;
+  }
+  .letter.show{
+    display: block;
+    animation: unfold 0.9s cubic-bezier(.2,.8,.2,1) forwards;
+    transform-origin: top center;
+  }
+  @keyframes unfold{
+    0%{ opacity: 0; transform: scaleY(0.2) translateY(-10px); }
+    60%{ opacity: 1; }
+    100%{ opacity: 1; transform: scaleY(1) translateY(0); }
+  }
+  .letter p{ font-size: 19px; line-height: 1.75; margin: 0 0 16px; color: var(--blush); }
+  .letter p:last-child{ margin-bottom: 0; }
+  .letter .sign{
+    font-family: 'Great Vibes', cursive; font-size: 32px; color: var(--gold);
+    text-align: right; margin-top: 12px;
+  }
+
+  /* ---------- Wishes ---------- */
+  .wishes{ display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 8px; max-width: 420px; }
+  .chip{
+    font-family: 'Poppins', sans-serif; font-size: 12.5px; letter-spacing: 0.03em;
+    color: var(--rose); border: 1px solid rgba(232,160,191,0.4);
+    padding: 9px 16px; border-radius: 999px; background: rgba(232,160,191,0.06);
+  }
+
+  /* ---------- Closing chapter ---------- */
+  .closing-mark{
+    font-family: 'Great Vibes', cursive;
+    font-size: clamp(34px, 8vw, 46px);
+    color: var(--gold);
+    margin: 4px 0 2px;
+  }
+  .replay-btn{
+    margin-top: 34px;
+    font-family: 'Poppins', sans-serif; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--gold-soft); background: transparent; border: 1px solid rgba(217,178,106,0.5);
+    padding: 12px 28px; border-radius: 999px; cursor: pointer;
+    transition: background 0.25s ease, color 0.25s ease;
+  }
+  .replay-btn:hover{ background: rgba(217,178,106,0.12); }
+
+  .footer{
+    margin-top: 50px; font-family: 'Poppins', sans-serif; font-size: 10.5px;
+    letter-spacing: 0.18em; color: rgba(247,227,230,0.4);
+  }
+
+  /* ---------- Confetti + tap hearts ---------- */
+  #confetti-layer{ position: fixed; inset: 0; pointer-events: none; z-index: 5; }
+  .confetto{ position: absolute; width: 8px; height: 14px; top: 40%; left: 50%; opacity: 0; }
+  .mini-heart{ position: fixed; pointer-events: none; z-index: 6; font-size: 18px; animation: floatUp 1.4s ease-out forwards; }
+  @keyframes floatUp{ 0%{ opacity: 1; transform: translateY(0) scale(0.6); } 100%{ opacity: 0; transform: translateY(-90px) scale(1.3); } }
+</style>
+</head>
+<body>
+
+<div id="loader"><p>for Meherin, with a little love from Safin&hellip;</p></div>
+
+<div id="petal-field"></div>
+<div id="firefly-field"></div>
+<div id="confetti-layer"></div>
+
+<!-- Chapter 1: Hero -->
+<section class="hero">
+  <div class="eyebrow reveal">a little something for</div>
+  <h1 class="name-title reveal d1">Meherin</h1>
+  <p class="subtitle reveal d2">on your special day</p>
+  <div class="scroll-cue reveal d3">scroll gently</div>
+</section>
+
+<!-- Chapter 2: Note -->
+<section id="note">
+  <div class="reveal">
+    <div class="divider"><span></span>
+      <svg viewBox="0 0 24 24" fill="none"><path d="M12 21s-7.5-4.6-10-9.1C0.3 8.2 2 4.5 5.6 4c2-.3 3.8.7 4.9 2.3.5.7.9 1.5 1.5 1.5s1-.8 1.5-1.5C14.6 4.7 16.4 3.7 18.4 4c3.6.5 5.3 4.2 3.6 7.9C19.5 16.4 12 21 12 21z" fill="#d9b26a"/></svg>
+    <span></span></div>
+    <p class="note-text">Once a year, the world quietly pauses to celebrate <span class="accent">someone rare</span> — today, that's you.</p>
+  </div>
+</section>
+
+<!-- Chapter 3: Cake -->
+<section id="cake-section">
+  <div class="reveal">
+    <div class="cake-stage" id="cakeStage">
+      <svg class="cake" viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="100" cy="150" rx="90" ry="8" fill="#3a2140"/>
+        <rect x="30" y="105" width="140" height="40" rx="6" fill="#7a2e4a"/>
+        <rect x="30" y="105" width="140" height="10" fill="#e8a0bf" opacity="0.5"/>
+        <rect x="55" y="70" width="90" height="38" rx="6" fill="#8f3a5c"/>
+        <rect x="55" y="70" width="90" height="9" fill="#f0bcd4" opacity="0.55"/>
+        <circle cx="60" cy="108" r="5" fill="#e8a0bf"/>
+        <circle cx="90" cy="110" r="4" fill="#e8a0bf"/>
+        <circle cx="130" cy="108" r="5" fill="#e8a0bf"/>
+        <circle cx="150" cy="110" r="4" fill="#e8a0bf"/>
+        <rect x="96" y="45" width="8" height="26" rx="2" fill="#eeddb0"/>
+        <g class="flame">
+          <path d="M100 20c5 7 6 12 6 16a6 6 0 1 1-12 0c0-4 1-9 6-16z" fill="#f6c453"/>
+          <path d="M100 30c2.5 3.5 3 6 3 8a3 3 0 1 1-6 0c0-2 .5-4.5 3-8z" fill="#fff1c9"/>
+        </g>
+        <g class="smoke"><path d="M100 18c0 0 -6 -6 0 -12" stroke="#cbb9c9" stroke-width="2" fill="none" stroke-linecap="round"/></g>
+      </svg>
+    </div>
+    <div class="cake-hint" id="cakeHint">tap the flame and make a wish ✨</div>
+  </div>
+</section>
+
+<!-- Chapter 4: Letter -->
+<section id="letter-section">
+  <div class="reveal" style="width:100%;">
+    <button class="open-btn" id="openBtn">open your letter</button>
+    <div class="letter" id="letter">
+      <p>Meherin,</p>
+      <p>Another year has found you — and with it, another year of your warmth, your laugh, and the quiet way you make everything around you feel a little softer.</p>
+      <p>Today isn't just about candles and cake. It's a small pause to say: the world is genuinely better with you in it. I hope this year hands you everything you've been quietly hoping for, and a few wonderful things you haven't even thought to ask for yet.</p>
+      <p>Happy birthday. Here's to you — always.</p>
+      <div class="sign">— Safin</div>
+    </div>
+    <div class="wishes" style="margin-top:28px;">
+      <div class="chip">🌸 endless joy</div>
+      <div class="chip">✨ soft days</div>
+      <div class="chip">💌 loved always</div>
+      <div class="chip">🎂 sweeter years</div>
+    </div>
+  </div>
+</section>
+
+<!-- Chapter 5: Closing -->
+<section id="closing">
+  <div class="reveal">
+    <div class="closing-mark">Happy Birthday, Meherin</div>
+    <p class="subtitle">from Safin, with love</p>
+    <button class="replay-btn" id="replayBtn">relive it again</button>
+    <div class="footer">MADE WITH LOVE • FOR MEHERIN</div>
+  </div>
+</section>
+
+<script>
+  // ---------- Loader ----------
+  window.addEventListener('load', () => {
+    setTimeout(() => document.getElementById('loader').classList.add('hide'), 2100);
+  });
+
+  // ---------- Petals ----------
+  const petalField = document.getElementById('petal-field');
+  const petalEmojis = ['🌸','🌷','💮','🌺'];
+  const petalCount = window.innerWidth < 600 ? 10 : 16;
+  for(let i=0;i<petalCount;i++){
+    const p = document.createElement('div');
+    p.className = 'petal';
+    p.textContent = petalEmojis[Math.floor(Math.random()*petalEmojis.length)];
+    p.style.left = Math.random()*100 + 'vw';
+    const dur = 10 + Math.random()*10;
+    p.style.animationDuration = dur + 's, ' + (2+Math.random()*2) + 's';
+    p.style.animationDelay = (-Math.random()*dur) + 's, 0s';
+    p.style.fontSize = (14 + Math.random()*14) + 'px';
+    petalField.appendChild(p);
+  }
+
+  // ---------- Fireflies ----------
+  const fireflyField = document.getElementById('firefly-field');
+  const fireflyCount = window.innerWidth < 600 ? 16 : 28;
+  for(let i=0;i<fireflyCount;i++){
+    const f = document.createElement('div');
+    f.className = 'firefly';
+    f.style.left = Math.random()*100 + 'vw';
+    f.style.top = Math.random()*100 + 'vh';
+    f.style.setProperty('--dx', (Math.random()*60-30) + 'px');
+    f.style.setProperty('--dy', (Math.random()*60-30) + 'px');
+    f.style.animationDuration = (5+Math.random()*6) + 's, ' + (2+Math.random()*3) + 's';
+    f.style.animationDelay = (Math.random()*4) + 's, ' + (Math.random()*4) + 's';
+    fireflyField.appendChild(f);
+  }
+
+  // ---------- Scroll reveal ----------
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){ entry.target.classList.add('in'); }
+    });
+  }, { threshold: 0.2 });
+  revealEls.forEach(el => io.observe(el));
+
+  // ---------- Cake candle blow ----------
+  const cakeStage = document.getElementById('cakeStage');
+  const cakeHint = document.getElementById('cakeHint');
+  let blown = false;
+  cakeStage.addEventListener('click', () => {
+    if(blown) return;
+    blown = true;
+    cakeStage.classList.add('blown');
+    cakeHint.textContent = 'wish made 🤍 happy birthday, Meherin';
+    burstConfetti();
+  });
+
+  // ---------- Letter open ----------
+  const openBtn = document.getElementById('openBtn');
+  const letter = document.getElementById('letter');
+  openBtn.addEventListener('click', () => {
+    letter.classList.add('show');
+    openBtn.classList.add('hidden');
+    burstConfetti();
+  });
+
+  // ---------- Replay ----------
+  document.getElementById('replayBtn').addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  // ---------- Confetti ----------
+  const confettiLayer = document.getElementById('confetti-layer');
+  const confettiColors = ['#d9b26a','#e8a0bf','#f7e3e6','#7a2e4a','#fff1c9'];
+  function burstConfetti(){
+    const count = window.innerWidth < 600 ? 24 : 38;
+    for(let i=0;i<count;i++){
+      const c = document.createElement('div');
+      c.className = 'confetto';
+      const angle = Math.random()*2*Math.PI;
+      const dist = 120 + Math.random()*220;
+      const x = Math.cos(angle)*dist;
+      const y = Math.sin(angle)*dist - 60;
+      c.style.background = confettiColors[Math.floor(Math.random()*confettiColors.length)];
+      c.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+      c.style.transform = `translate(-50%,-50%) rotate(${Math.random()*360}deg)`;
+      c.animate([
+        { transform: `translate(-50%,-50%) rotate(0deg)`, opacity: 1 },
+        { transform: `translate(${x}px, ${y}px) rotate(${Math.random()*720-360}deg)`, opacity: 0 }
+      ], { duration: 1100 + Math.random()*700, easing: 'cubic-bezier(.2,.7,.3,1)' });
+      confettiLayer.appendChild(c);
+      setTimeout(()=>c.remove(), 2000);
+    }
+  }
+
+  // ---------- Tap hearts anywhere ----------
+  document.addEventListener('pointerdown', (e) => {
+    const heart = document.createElement('div');
+    heart.className = 'mini-heart';
+    heart.textContent = ['💗','💛','🤍','💕'][Math.floor(Math.random()*4)];
+    heart.style.left = (e.clientX - 9) + 'px';
+    heart.style.top = (e.clientY - 9) + 'px';
+    document.body.appendChild(heart);
+    setTimeout(()=>heart.remove(), 1500);
+  });
+</script>
+
+</body>
+</html>
